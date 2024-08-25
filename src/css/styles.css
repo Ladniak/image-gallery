@@ -1,18 +1,219 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
-@import url('./reset.css');
-@import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+.search-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 36px;
+  margin-bottom: 34px;
+}
+
+.search-input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+
+  width: 272px;
+  height: 34px;
+
+  border-radius: 4px;
+  border-color: #808080;
+  background: #fff;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.search-input:hover {
+  border-color: #000;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #4E75FF;
+  outline: none;
+}
+
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 40px;
+
+  background: #4e75ff;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background: #6c8cff;
+}
+
+.gallery {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #808080;
+}
+
+.gallery-img {
+  width: 360px;
+  height: 200px;
+}
+
+.info-div {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 25px;
+}
+
+.info-one-template {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.load-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: auto;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+
+  color: #fff;
+  background: #4e75ff;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.load-btn:hover {
+  background: #6c8cff;
+}
+
+.load-btn.is-hidden {
+  display: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  border: 3px solid;
+  border-color: #FFF #FFF transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.loader.is-hidden {
+  display: none;
+}
+
+.loader::after,
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent transparent #4e75ff #4e75ff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+.loader::before {
+  width: 32px;
+  height: 32px;
+  border-color: #FFF #FFF transparent transparent;
+  animation: rotation 1.5s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
