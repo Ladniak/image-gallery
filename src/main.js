@@ -1,4 +1,3 @@
-import axios from 'axios';
 // Описаний у документації
 import iziToast from "izitoast";
 // Додатковий імпорт стилів
@@ -17,6 +16,8 @@ const formElSearch = document.querySelector('.search-form');
 const loadEl = document.querySelector('span');
 const loadBtn = document.querySelector('.load-btn');
 
+
+let numOfEl = 0;
 let currentPage = 1;
 let searchFromInput = '';
 
@@ -28,6 +29,7 @@ const onSearchSubmit = async (event) => {
 
         searchFromInput = formElSearch.elements.user_query.value;
 
+        numOfEl = 0;
         currentPage = 1;
 
         if (searchFromInput == '') {
@@ -60,7 +62,10 @@ const onSearchSubmit = async (event) => {
             return;
         }
 
+        numOfEl += response.data.hits.length;
+        
         const galleryCardTemplate = response.data.hits.map(imgDetails => createGalleryCard(imgDetails)).join('');
+        
         galleryEl.innerHTML = galleryCardTemplate;
 
         let gallery = new SimpleLightbox('.gallery a');
@@ -81,22 +86,32 @@ const onBtnClick = async event => {
     try {
         currentPage++;
         loadEl.classList.remove("is-hidden");
+
         const response = await fetchPhotos(searchFromInput, currentPage);
         const galleryCardTemplate = response.data.hits.map(imgDetails => createGalleryCard(imgDetails)).join('');
         galleryEl.insertAdjacentHTML('beforeend', galleryCardTemplate);
+
+        numOfEl += response.data.hits.length;
 
         let gallery = new SimpleLightbox('.gallery a');
         gallery.refresh();
         gallery.on('show.simplelightbox', function () { });    
 
-        if (currentPage === response.data.hits.totalHits) {
+        const galleryCardEl = galleryEl.querySelector('.gallery-card');
+        const cardHeight = galleryCardEl.getBoundingClientRect().height;
+
+        window.scrollBy({
+            top: cardHeight * 2,
+            behavior: 'smooth'
+        });
+
+        if (numOfEl === response.data.totalHits) {
             loadBtn.classList.add('is-hidden');
             iziToast.info({
                 message: "We're sorry, but you've reached the end of search results.",
                 position: 'topRight',
             })
         }
-        
     } catch (error) {
         console.log(error);
     } finally {
