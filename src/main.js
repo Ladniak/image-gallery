@@ -21,6 +21,9 @@ let numOfEl = 0;
 let currentPage = 1;
 let searchFromInput = '';
 
+let gallery = new SimpleLightbox('.gallery a');
+gallery.on('show.simplelightbox', function () { });   
+
 const onSearchSubmit = async (event) => {
 
     try {
@@ -32,7 +35,7 @@ const onSearchSubmit = async (event) => {
         numOfEl = 0;
         currentPage = 1;
 
-        if (searchFromInput == '') {
+        if (searchFromInput === '') {
             iziToast.error({
                 message: 'Sorry, there are no images matching your search query. Please try again!',
                 position: 'topRight',
@@ -68,13 +71,18 @@ const onSearchSubmit = async (event) => {
         
         galleryEl.innerHTML = galleryCardTemplate;
 
-        let gallery = new SimpleLightbox('.gallery a');
-        gallery.refresh();
-        gallery.on('show.simplelightbox', function () { });    
+        gallery.refresh();  
         
         loadBtn.classList.remove('is-hidden');
+
+        if (response.data.hits.length < 15) {
+            loadBtn.classList.add("is-hidden");
+        }
     } catch (error) {
-        console.log(error);
+        iziToast.error({
+                message: error,
+                position: 'topRight',
+            });
     } finally {
         loadEl.classList.add("is-hidden");
     };
